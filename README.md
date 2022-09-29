@@ -3,7 +3,7 @@ Old homework files that I've used or that I've written through my time at Softwa
 
 :warning:These are just backup files from my old university projects/tasks.:warning:
 
-## Structure
+## Directory Structure
 
 The structure of the directories goes as follows:
 
