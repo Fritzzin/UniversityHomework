@@ -1,0 +1,24 @@
+Estratégias:
+ESTÁTICA:
+
+estática-fixa: Administrador cadastra manualmente as rotas em cada roteador
+estática-flooding: Administrador pode replicar a tablea para todos roteadores através do princípio do "inundação"
+DINÂMICA:
+
+estática-isolada: Cada roteador toma decições baseadas em algumas preferências e o estado das filas nas portas de saída
+estática-distribuída: Decisões de roteamento baseadas no conhecimento da topologia e condições de atraso. Informação é partilhada entre os roteadores.
+estática-centralizada: Decisões de roteamento baseadas no conhecimento da topologia e condições de atraso. O controlador fornece instruções de roteamento aos nós.
+
+REMOVER OSPF
+int gig0/0
+no ip ospf 1 area 0
+
+CONFIGURAÇÃO OSPF ROUTER
+conft
+router ospf 1
+network 192.168.4.0 0.0.0.255 area 0
+
+VER CONFIGURAÇÃO DO OSPF
+conft
+show ip route ospf
+

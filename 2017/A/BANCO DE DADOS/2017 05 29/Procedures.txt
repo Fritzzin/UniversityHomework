@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION addbairros ()
+RETURNS INTEGER
+AS $$
+DECLARE 
+quant INTEGER;
+BEGIN
+quant := 21;
+WHILE quant <= 1000 LOOP
+INSERT INTO endereços 
+(id, logradouro, numero, bairros_id) 
+VALUES
+(quant,'Rua ' || quant, quant, CAST(RANDOM()*12) AS INTEGER);
+quant := quant + 1;
+END LOOP;
+RETURN 0;
+END;
+$$ LANGUAGE plpgsql;

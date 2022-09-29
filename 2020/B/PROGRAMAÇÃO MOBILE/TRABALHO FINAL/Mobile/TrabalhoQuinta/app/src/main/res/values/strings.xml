@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TrabalhoQuinta</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="text_view_login">Usuário:</string>
+    <string name="edit_text_hint_login">Nome de usuário</string>
+    <string name="text_view_senha">Senha:</string>
+    <string name="button_login">Entrar</string>
+    <string name="edit_text_hint_senha">******</string>
+    <string name="image_view_descripton_login">Pessoa lendo livro</string>
+    <string name="text_view_pesquisa">Digite o nome do livro:</string>
+    <string name="edit_text_hint_pesquisa">Nome do livro</string>
+    <string name="content_description_procura">Pessoa procurando algo</string>
+    <string name="button_buscar">Buscar</string>
+    <string name="button_registrar">Registrar</string>
+    <string name="text_view_repetir_senha">Repita a senha:</string>
+    <string name="image_view_content_registrar">Cadastro de usuario</string>
+</resources>

@@ -1,0 +1,13 @@
+SELECT name
+FROM region;
+
+
+SELECT d.name, f.name
+FROM country d, region f
+WHERE d.region_id = f.id;
+
+SELECT d.name, f.firstname
+FROM job d LEFT JOIN employee f
+ON d.id = f.job_id
+ORDER BY d.name, f.firstname;
+

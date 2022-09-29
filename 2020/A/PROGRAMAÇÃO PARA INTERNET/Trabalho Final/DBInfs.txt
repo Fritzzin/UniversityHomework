@@ -1,0 +1,4 @@
+dbName: dbnovatecnologia
+	TbName: usuarios
+		Values: Id int PK
+			Nome varchar 100

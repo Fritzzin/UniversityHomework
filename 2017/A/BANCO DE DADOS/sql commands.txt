@@ -1,0 +1,74 @@
+CREATE TABLE region (
+    id INT,
+    name VARCHAR(45),
+    CONSTRAINT pk_region_id PRIMARY KEY (id)
+);
+    
+CREATE TABLE country (
+    id INT,
+    name VARCHAR(45),
+    CONSTRAINT pk_country_id PRIMARY KEY (id),
+    region_id INT,
+    CONSTRAINT fk_region_id FOREIGN KEY(region_id) REFERENCES region (id)
+);
+    
+CREATE TABLE location (
+    id INT,
+    address VARCHAR(45),
+    postalcode VARCHAR(9),
+    state VARCHAR(2),
+    CONSTRAINT pk_location_id PRIMARY KEY (id),
+    city VARCHAR(45) NOT NULL,
+    country_id INT,
+    CONSTRAINT fk_country_id FOREIGN KEY(country_id) REFERENCES country (id)
+);
+    
+CREATE TABLE job (
+    id INT,
+    minsalary NUMERIC(8,2),
+    maxsalary NUMERIC(8,2),
+    CONSTRAINT pk_job_id PRIMARY KEY (id),
+    name VARCHAR(45) NOT NULL
+);    
+
+CREATE TABLE department (
+    id INT,
+    CONSTRAINT pk_department_id PRIMARY KEY (id),
+    name VARCHAR(45) NOT NULL,
+    location_id INT,
+    CONSTRAINT fk_location_id FOREIGN KEY (location_id) REFERENCES location (id)
+);
+    
+
+CREATE TABLE employee (
+    id INT,
+    firstname VARCHAR(45),
+    phone VARCHAR(20),
+    salary NUMERIC(8,2),
+    commission NUMERIC(4,2),
+    CONSTRAINT pk_employee_id PRIMARY KEY (id),
+    email VARCHAR(45) NOT NULL
+    CONSTRAINT uq_email UNIQUE,
+    lastname VARCHAR(45) NOT NULL,
+    hire DATE NOT NULL,
+    job_id INT NOT NULL,
+    manager_id INT,
+    department_id INT,
+    CONSTRAINT fk_job_id FOREIGN KEY(job_id) REFERENCES job (id),
+    CONSTRAINT fk_manager_id FOREIGN KEY(manager_id) REFERENCES employee (id),
+    CONSTRAINT fk_department_id FOREIGN KEY(department_id) REFERENCES department (id)
+);
+ALTER TABLE department ADD COLUMN manager_id INT;
+ALTER TABLE department ADD CONSTRAINT fk_manager_id FOREIGN KEY(manager_id) REFERENCES employee;
+    
+CREATE TABLE jobhistory (
+    employee_id INT,
+    start DATE,
+    finish DATE,
+    CONSTRAINT pk_jobhistory PRIMARY KEY (employee_id, start, finish),    
+    job_id INT NOT NULL,
+    department_id INT,    
+    CONSTRAINT fk_job_id FOREIGN KEY (job_id) REFERENCES job (id),
+    CONSTRAINT fk_employee_id FOREIGN KEY (employee_id) REFERENCES employee (id),
+    CONSTRAINT fk_department_id FOREIGN KEY (department_id) REFERENCES department (id)
+);

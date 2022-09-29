@@ -1,0 +1,9 @@
+yoji > fupe
+xako > tuga
+tale > ruti
+pima > yoji
+pima > viyo
+viyo > roma
+yoji > tale
+tale > dora
+viyo > xako

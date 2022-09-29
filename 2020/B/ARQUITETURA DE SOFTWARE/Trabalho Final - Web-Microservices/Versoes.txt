@@ -1,0 +1,14 @@
+VM:
+Ubuntu 20.04.1 LTS
+openjdk-8-jdk
+tomcat8.5.59 (porta 8080)
+postgresql 12.4
+
+Libs JAVA:
+gson-2.6.2.jar
+postgresql-9.4.1209.jar (Driver JDBC)
+JAX-RS 2.0
+Jersey 2.5.1
+
+IDE:
+Netbeans 8.2 RC

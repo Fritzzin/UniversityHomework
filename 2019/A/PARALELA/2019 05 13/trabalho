@@ -1,0 +1,35 @@
+Release 1:
+- Produtor:	Acrescenta dados na fila;
+- Consumidor:	Consume dados da fila;
+- Uma memoria compartilhada (10 bytes) (Vetor com 10 posições)
+- Produtor: 
+	- Gerador de números aleatórios 
+	- Thread
+	- Velocidade constante (Thread.sleep())
+	- Se produzir mais que capacidade, Overflow!
+- Consumidor:
+	- Imprimir na tela valor do buffer
+	- Thread
+	- Velocidade Constante
+	- Se consumir mais que produzido, Underflow!
+
+
+Fila:
+	- Buffer circular
+	- First in First out
+	- Overflow:	Produzir mais espaços que existem
+	- Underflow:	Consumir mais espaços que existem
+	- 
+
+(Repetição sem IF)
+i = i % tamanhoFila + 1; 
+
+Exemplo:
+	i = 1;
+	processo (i-1);
+	i = i % 7 + 1;
+
+V1 - 1 Produtor	1 Consumidor
+V2 - 1 Produtor n Consumidor
+V3 - n Produtor 1 Consumidor
+V4 - n Produtor n Consumidor

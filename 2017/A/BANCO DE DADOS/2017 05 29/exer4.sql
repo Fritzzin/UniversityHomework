@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION deletefunc (delet INTEGER)
+RETURNS TRIGGER
+AS $$
+BEGIN
+INSERT INTO employee_delete
+SELECT * 
+FROM employee 
+WHERE id=OLD.id;
+RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER deletado
+BEFORE DELETE ON employee
+FOR EACH ROW
+EXECUTE PROCEDURE deletefunc();

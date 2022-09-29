@@ -1,0 +1,171 @@
+URLS:
+
+Servidor: 177.44.248.82
+Portas a serem abertas:
+	http://177.44.248.1:4217/
+	http://177.44.248.1:7546/
+
+Login: http://177.44.248.82:8080/RealizarLogin/webresources/login
+Exemplo: 
+{
+  "id": 0,
+  "login": "teste",
+  "senha": "encriptar"
+}
+
+
+Inserir Pessoa: http://177.44.248.82:8080/SalvarPessoa/webresources/salvarPessoa
+Exemplo: 
+{
+	"idUsuario": 0,
+	"nome": "augusto",
+	"email": "augusto@email.com",
+	"cpf": "123.456.789-00"
+}
+
+
+Inserir Usuario: http://177.44.248.82:8080/SalvarUsuario/webresources/salvarUsuario
+Exemplo
+{
+  "id": 0,
+  "login": "Juca",
+  "senha": "bala"
+}
+
+
+Inserir Evento: http://177.44.248.82:8080/SalvarEvento/webresources/salvarEvento
+Exemplo:
+{
+	"id": 0,
+	"nome": "HOJE",
+	"data": "02/11/2020"
+}
+
+
+Inserir Pessoa em Evento: http://177.44.248.82:8080/InscricaoEvento/webresources/inscricaoEvento
+Exemplo:
+{
+	"idPessoa": 4,
+	"idEvento": 2,
+	"compareceu": false,
+	"codigoValidacao": "cccccc"
+}
+
+
+Consultar Evento: http://177.44.248.82:8080/ConsultarEvento/webresources/consultarEventos
+Exemplo: 1 (Apenas o ID do Evento)
+
+
+Consultar todos eventos de uma pessoa: http://177.44.248.82:8080/ConsultarEvento/webresources/consultarEventos
+Exemplo: 1 (Apenas o ID da Pessoa)
+
+
+Consultar lista de participantes de um evento: http://177.44.248.82:8080/ConsultaListaEventoID/webresources/consultarListaEventoId
+Exemplo: 1 (Apensar o ID do Evento)
+
+
+Cancelar Inscricao Evento: http://177.44.248.82:8080/CancelamentoInscricao/webresources/cancelamentoInscricao
+Exemplo:
+{
+	"idPessoa": 4,
+	"idEvento": 1
+}
+
+
+Registar Presença em evento: http://177.44.248.82:8080/RegistrarPresenca/webresources/registrarPresenca
+Exemplo:
+{
+	"idPessoa": 4,
+	"idEvento": 2
+}
+
+
+Desmarcar Presença em evento: http://177.44.248.82:8080/DesmarcarPresenca/webresources/desmarcarPresenca
+Exemplo:
+{
+	"idPessoa": 4,
+	"idEvento": 2
+}
+
+
+Servidor recebe ArrayList<PessoaEvento>: http://177.44.248.82:8080/ReceberArrayPessoaEvento/webresources/receberArrayPessoaEvento
+Exemplo:
+[
+	{
+		"idPessoa": 29,
+		"idEvento": 1,
+		"compareceu": false
+	},
+	{
+		"idPessoa": 28,
+		"idEvento": 2,
+		"compareceu": false
+	}
+]
+
+
+Servidor recebe ArrayList<Pessoa>: http://177.44.248.82:8080/ReceberArrayPessoa/webresources/receberArrayPessoa 
+Exemplo:
+[
+	{
+		"id": 0,
+		"idUsuario": 0,
+		"nome": "teste1",
+		"email": "teste1@email.com",
+		"cpf": "000.000.000-00"
+	},
+	{
+		"id": 0,
+		"idUsuario": 0,
+		"nome": "teste2",
+		"email": "teste2@email.com",
+		"cpf": "000.000.000-00"
+	},
+	{
+		"id": 0,
+		"idUsuario": 0,
+		"nome": "teste3",
+		"email": "teste3@email.com",
+		"cpf": "000.000.000-00"
+	}
+]
+
+
+Validar Certificado: http://177.44.248.82:8080/ValidarCertificado/webresources/validarCertificado
+Exemplo:
+c16a5320fa475530d9583c34fd356ef5
+
+
+Buscar Pessoa utilizando o login de Usuario:
+http://177.44.248.82:8080/ConsultarPessoaPorUsuario/webresources/consultarPessoaPorUsuarioId
+Exemplo:
+Juca
+
+
+Consultar pdf: 
+http://177.44.248.82:8080/ConsultaPDF/webresources/generic/getPDF/{idCertificado}
+http://177.44.248.82:8080/ConsultaPDF/webresources/generic/getPDF/{idPessoa}/{idEvento}
+São 2 gets com inputs através da URL então na primeira url o pdf é retornado tendo somente como base o identificador do certificado
+O segundo get retorna o pdf informando o id da pessoa e o id do evento referente
+Exemplo funcional:
+http://177.44.248.82:8080/ConsultaPDF/webresources/generic/getPDF/5/2
+http://177.44.248.82:8080/ConsultaPDF/webresources/generic/getPDF/9a1158154dfa42caddbd0694a4e9bdc8
+
+
+Envia email: PUT
+http://177.44.248.82:8080/EnviaEmail/webresources/generic/sendEmail
+{
+  "titulo": "abacaxi",
+  "descricao": "asdasdojkapsodjaopsdpçasmdçklpasdml",
+  "destinatario": "lucasdeassis09@gmail.com"
+}
+
+
+Cadastro completo: PUT
+http://177.44.248.82:8080/SalvarPessoa/webresources/salvarPessoa/cadastroCompleto
+{"id":0,"idUsuario":0,"nome":"LucasTeste","email":"aodjwoaj@asod.br","cpf":"21382319","login":"login9","senha":"senha9"}
+
+
+Completar o cadastro parcial: PUT
+http://localhost:8084/SalvarPessoa/webresources/salvarPessoa/completaCadastro
+{"id":0,"idUsuario":0,"cpf":"01293012","login":"Eurecat","senha":"abacaxipo"}

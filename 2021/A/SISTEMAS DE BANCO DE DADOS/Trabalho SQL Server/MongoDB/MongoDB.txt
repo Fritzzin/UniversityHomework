@@ -1,0 +1,288 @@
+/* Lista de Produtos e seu respectivo preço */
+ db.Product.aggregate([{
+    $project: {
+        Name: "$Name",
+        ProductNumber: "$ProductNumber",
+        Price: "$ListPrice"
+    }
+}, {
+    $sort: {
+        Name: 1
+    }
+}]);
+
+
+/*Vendas realizadas no ano de 2011, exibindo o valor total da venda e o valor total da venda + impostos e frete.*/
+ db.SalesOrderHeader.find({
+  "OrderDate": {
+    "$gte": ISODate("2011-01-01T00:00:00.000Z"),
+    "$lte": ISODate("2011-12-01T00:00:00.000Z")
+  }
+},
+{
+  "CustomerID": 1,
+  "SalesOrderID": 1,
+  "SubTotal": 1,
+  "TotalDue": 1,
+  "OrderDate": 1
+});
+
+
+/* Quantidade em estoque de cada produto */
+db.Product.aggregate([{
+    $lookup: {
+        from: 'ProductInventory',
+        localField: 'ProductID',
+        foreignField: 'ProductID',
+        as: 'inventory'
+    }
+}, {
+    $unwind: "$inventory"
+}, {
+    $project: {
+        _id: 1,
+        Name: 1,
+        ProductNumber: 1,
+        Quantity: {
+            $sum: "$inventory.Quantity"
+        }
+    }
+}, {
+    $group: {
+        _id: {
+            _id: "$_id",
+            Name: "$Name",
+            ProductNumber: "$ProductNumber"
+        },
+        Quantity: {
+            $sum: "$Quantity"
+        }
+    }
+}, {
+    $sort: {
+        "_id.Name": 1
+    }
+}]);
+
+
+/* Produtos da linha 'R' e que levam menos de 4 dias para fabricação */
+db.Product.aggregate([{
+    $match: {
+        ProductLine: "R",
+        DaysToManufacture: {
+            $lt: 4
+        }
+    }
+}, {
+    $project: {
+        Name: "$Name",
+        ProductNumber: "$ProductNumber",
+        Price: "$ListPrice"
+    }
+}, {
+    $sort: {
+        Name: 1
+    }
+}]);
+
+
+/* Valor total de vendas e vendas + impostos e frete por continente e país em 2011
+   OBS: No caso dos Estados Unidos é informado a região do país na tabela SalesTerritory,
+   por isso é necessário o IIF para exibir apenas países */
+db.SalesOrderHeader.aggregate([{
+    $match: {
+        OrderDate: {
+            $gte: ISODate("2011-01-01T00:00:00.000Z"),
+            $lte: ISODate("2011-12-31T00:00:00.000Z")
+        }
+    }
+}, {
+    $lookup: {
+        from: 'SalesTerritory',
+        localField: 'TerritoryID',
+        foreignField: 'TerritoryID',
+        as: 'salesterritory'
+    }
+}, {
+    $unwind: "$salesterritory"
+}, {
+    $project: {
+        _id: 0,
+        Continent: "$salesterritory.Group",
+        CountryRegionCode: "$salesterritory.CountryRegionCode",
+        Name: "$salesterritory.Name",
+        SubTotal: {
+            $sum: "$SubTotal"
+        },
+        TotalDue: {
+            $sum: "$TotalDue"
+        }
+    }
+}, {
+    $group: {
+        _id: {
+            Continent: "$Continent",
+            CountryRegionCode: "$CountryRegionCode",
+            Country: {
+                $cond: {
+                    if: {
+                        $eq: ["$CountryRegionCode", "US"]
+                    },
+                    then: "United States",
+                    else: "$Name"
+                }
+            }
+        },
+        SubTotal: {
+            $sum: "$SubTotal"
+        },
+        TotalDue: {
+            $sum: "$TotalDue"
+        }
+    }
+}, {
+    $sort: {
+        "_id.Continent": 1,
+        "_id.Country": 1
+    }
+}]);
+
+
+ /* Top 10 clientes que mais pagaram impostos em 2011*/
+db.SalesOrderHeader.aggregate([
+  {
+    $match: {
+      OrderDate: {
+        $gte: ISODate("2011-01-01T00:00:00.000Z"),
+        $lte: ISODate("2011-12-31T00:00:00.000Z")
+      }
+    }
+  },
+  {
+    $group: {
+      _id: {
+        CustomerID: "$CustomerID"
+      },
+      Totals: {
+        $sum: "$TaxAmt"
+      }
+    }
+  },
+  {
+    $sort: {
+      Totals: -1
+    }
+  },
+  {
+    $limit: 10
+  }
+]);
+
+
+// Demora para retornar, porém funciona
+/* Lista de produtos com média de preço maior que 1000 */
+db.Product.aggregate([{
+    $lookup: {
+        from: 'SalesOrderDetail',
+        localField: 'ProductID',
+        foreignField: 'ProductID',
+        as: 'orderdetail'
+    }
+}, {
+    $unwind: "$orderdetail"
+}, {
+    $project: {
+        _id: 1,
+        ProductID: 1,
+        Name: 1,
+        ListPrice: "$orderdetail.UnitPrice"
+    }
+}, {
+    $group: {
+        _id: {
+            ProductID: "$ProductID",
+            Name: "$Name"
+        },
+        AvgListPrice: {
+            $avg: "$ListPrice"
+        }
+    }
+}, {
+    $match: {
+        AvgListPrice: {
+            $gt: 1000
+        }
+    }
+}, {
+    $sort: {
+        "_id.ProductID": 1
+    }
+}]);
+
+
+// Demora para rodar
+/* Preço médio de cada produto que foi vendido mais de 10 unidades no ano de 2014 */
+db.SalesOrderDetail.aggregate([{
+    $lookup: {
+        from: 'SalesOrderHeader',
+        localField: 'SalesOrderID',
+        foreignField: 'SalesOrderID',
+        as: 'header'
+    }
+}, {
+    $unwind: "$header"
+}, {
+    $project: {
+        ProductID: 1,
+        UnitPrice: 1,
+        OrderQty: 1,
+        Year: {
+            $year: "$header.OrderDate"
+        }
+    }
+}, {
+    $match: {
+        OrderQty: {
+            $gt: 10
+        },
+        Year: 2014
+    }
+}, {
+    $group: {
+        _id: {
+            ProductID: "$ProductID"
+        },
+        AvgPrice: {
+            $avg: "$UnitPrice"
+        }
+    }
+}, {
+    $sort: {
+        AvgPrice: -1
+    }
+}]);
+
+
+ /* Produtos que venderam entre $1M e $2M */
+db.SalesOrderDetail.aggregate([{
+    $group: {
+        _id: {
+            ProductID: "$ProductID"
+        },
+        Total: {
+            $sum: "$LineTotal"
+        }
+    }
+}, {
+    $match: {
+        Total: {
+            $gte: 1000000,
+            $lte: 2000000
+        }
+    }
+}, {
+    $sort: {
+        Total: -1
+    }
+}]);
+

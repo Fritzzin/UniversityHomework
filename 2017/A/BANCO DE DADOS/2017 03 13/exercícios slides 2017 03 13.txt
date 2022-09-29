@@ -1,0 +1,151 @@
+INSERT INTO country (id,name) VALUES 
+(1,'Brazil'),
+(2, 'United States'),
+(3, 'Argentina'),
+(4, 'Mexico'),
+(5, 'Spain'),
+(6, 'Italy'),
+(7, 'Germany'),
+(8, 'Japan'),
+(9, 'South Korea'),
+(10, 'China'),
+(11, 'Uruguay');
+
+COMMIT;
+
+INSERT INTO region VALUES
+(1,'North America'),
+(2,'Central America'),
+(3,'South America'),
+(4,'Europe'),
+(5,'Asia'),
+(6,'Oceania');
+
+COMMIT;
+
+INSERT INTO location (id, address, city, country_id) VALUES
+(1, 'Street 1', 'Rio de Janeiro', 1),
+(2, 'Street 2', 'New York', 2),
+(3, 'Street 3', 'Buenos Aires', 3),
+(4, 'Street 4', 'Mexico City', 4),
+(5, 'Street 5', 'Madrid', 5),
+(6, 'Street 5', 'Rome', 6),
+(7, 'Street 7', 'Berlin', 7),
+(8, 'Street 8', 'Tokyo', 8),
+(9, 'Street 9', 'Seoul', 9),
+(10, 'Street 10', 'Beijing', 10);
+
+COMMIT;
+
+INSERT INTO job (id, name) VALUES
+(1, 'Programador(a)'),
+(2, 'Cozinheiro(a)'),
+(3, 'Faxineiro(a)'),
+(4, 'Gerente'),
+(5, 'Jardineiro(a)'),
+(6, 'Secretário(a)'),
+(7, 'Atendente de Telemarketing'),
+(8, 'Analista de Sistemas'),
+(9, 'Arquiteto(a)'),
+(10, 'Engenheiro Civil'),
+(11, 'Professor(a)');
+
+COMMIT;
+
+INSERT INTO employee (id, firstname, lastname, email, hire, job_id) VALUES
+(1, 'João', 'da Silva', 'JS@email.com', CURRENT_DATE, 1),
+(2, 'Marcia', 'dos Santos', 'MSantos@email.com', '20140818', 2),
+(3, 'Fausto', 'Silva', 'FSilva@email.com', CURRENT_DATE, 3),
+(4, 'Maria', 'Corte', 'MariaC@email.com', '20160115', 4),
+(5, 'Jonatan', 'Santos', 'JSantos@email.com', '20150620', 5),
+(6, 'Nome', 'Sobrenome', '...6@email.com', CURRENT_DATE, 6),
+(7, 'Nome', 'Sobrenome', '...7@email.com', CURRENT_DATE, 7),
+(8, 'Nome', 'Sobrenome', '...8@email.com', CURRENT_DATE, 8),
+(9, 'Nome', 'Sobrenome', '...9@email.com', CURRENT_DATE, 9),
+(10, 'Nome', 'Sobrenome', '...10@email.com', CURRENT_DATE, 10);
+
+COMMIT;
+
+INSERT INTO department (id, name) VALUES
+(1, 'Vendas'),
+(2, 'TI'),
+(3, 'Departamento 3'),
+(4, 'Departamento 4'),
+(5, 'Departamento 5'),
+(6, 'Departamento 6'),
+(7, 'Departamento 7'),
+(8, 'Departamento 8'),
+(9, 'Departamento 9'),
+(10, 'Departamento 10');
+
+COMMIT;
+
+INSERT INTO jobhistory VALUES
+(1, '20120202', '20130303', 1, 1),
+(2, '20120202', '20130303', 2, 2),
+(3, '20120202', '20130303', 3, 3),
+(4, '20120202', '20130303', 4, 4),
+(5, '20120202', '20130303', 5, 5),
+(6, '20120202', '20130303', 6, 6),
+(7, '20120202', '20130303', 7, 7),
+(8, '20120202', '20130303', 8, 8),
+(9, '20120202', '20130303', 9, 9),
+(10, '20120202', '20130303', 10, 10);
+
+COMMIT;
+
+UPDATE country
+SET name = 'BR'
+WHERE name = 'Brazil';
+
+SAVEPOINT sp1;
+
+UPDATE department
+SET name = 'TEST'
+WHERE name = 'Vendas';
+
+SAVEPOINT sp2;
+
+UPDATE employee
+SET firstname = 'TEST'
+WHERE firstname = 'João';
+
+SAVEPOINT sp3;
+
+UPDATE job
+SET name = 'TEST'
+WHERE name = 'Gerente';
+
+SAVEPOINT sp4;
+
+UPDATE jobhistory
+SET finish = CURRENT_DATE
+WHERE finish = '20130303';
+
+SAVEPOINT sp5;
+
+UPDATE location
+SET address = 'TEST'
+WHERE address = 'Street 1';
+
+SAVEPOINT sp6;
+
+UPDATE region
+SET name = 'TEST'
+WHERE name = 'Oceania';
+
+SAVEPOINT sp7;
+
+DELETE FROM country
+WHERE name = 'Uruguai';
+
+ROLLBACK TO SAVEPOINT sp1;
+
+DELETE FROM depeartment
+WHERE name = Departamento 10;
+
+ROLLBACK TO SAVEPOINT sp2;
+
+DELETE FROM
+
+

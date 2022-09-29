@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApplicationTeste.Models.usuarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Adicionar</button></a>
+</p>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th class="mdl-data-table__cell--non-numeric">
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">
+                <style>
+                    a {
+                        color: white;
+                    }
+                </style>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> @Html.ActionLink("Editar", "Editar", new { /* id=item.PrimaryKey */ }) </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> @Html.ActionLink("Detalhes", "Detalhes", new { /* id=item.PrimaryKey */ }) </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"> @Html.ActionLink("Deletar", "Deletar", new { /* id=item.PrimaryKey */ }) </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

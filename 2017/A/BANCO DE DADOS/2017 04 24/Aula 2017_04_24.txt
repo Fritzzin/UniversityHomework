@@ -1,0 +1,62 @@
+SELECT e.firstname ||' '|| e.lastname AS "Nome Completo", e.hire
+FROM employee e
+WHERE e.department_id = (SELECT em.department_id
+						FROM employee em
+						WHERE em.firstname = 'Lucas' 
+                        AND em.lastname = 'Lima')
+AND (e.firstname != 'Lucas')
+AND (e.lastname != 'Lima');
+
+
+SELECT e.id, e.salary
+FROM employee e
+WHERE e.salary > (SELECT AVG (em.salary)
+				 FROM employee em)
+ORDER BY e.salary ASC;
+
+
+
+SELECT e.id, e.lastname
+FROM employee e
+WHERE e.department_id IN (SELECT em.department_id
+						 FROM employee em
+						 WHERE em.lastname LIKE '%u%');
+						 
+						 
+
+SELECT e.lastname, e.department_id, e.job_id
+FROM employee e
+WHERE e.department_id IN(SELECT d.id
+					     FROM department d
+					     WHERE d.location_id = 115);
+						 
+						 
+						 
+SELECT e.firstname, e.salary
+FROM employee e
+WHERE e.manager_id = (SELECT em.id
+					  FROM employee em
+					  WHERE em.firstname = 'Douglas'
+					  AND em.lastname = 'Müller');
+					  
+					  
+					  
+SELECT e.firstname, e.job_id
+FROM employee e
+WHERE e.department_id = (SELECT d.id
+						 FROM department d
+						 WHERE d.name = 'TI');
+						 
+						 
+						 
+SELECT e.firstname, e.salary
+FROM employee e
+WHERE e.salary > ANY(SELECT em.salary
+				  	  FROM employee em
+				  	  WHERE em.department_id = 90);
+					  
+					  
+					  
+SELECT 
+FROM employee e
+WHERE

@@ -1,0 +1,18 @@
+	- Ligar (cabos):
+		PC - Switch = Cabo;
+		Ligar switches nas portas Giga (Maior tráfego entre switches);
+		Giga é o bastante para mais de 150 máquinas contanto que não há streaming (tráfego contínuo);
+		Ligar Access Point a porta Giga;
+		Trocar placa de rede dos notebooks para wireless (Packet tracer);
+		
+	- Configurar IP:
+		IP com /24 no final = Não vai variar.
+		256 IPs possíveis, não utilizar 192.168.0.0 (Rede) e 192.168.0.255(Broadcast [Todos os hosts desta rede]);
+		Configurar SSID (nome) para Access Point; Definir canal; Segurança (usuário, senha, etc...);
+		Banda canal de telefonia digital = 64k;
+		
+	- Testar
+	
+	
+	-Hub/Access Point = Barramento, todos ouvem, apenas um recebe;
+	-Switch = chaveamento de pares;
